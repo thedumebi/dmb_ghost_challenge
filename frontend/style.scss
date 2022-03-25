@@ -1,0 +1,121 @@
+$purple: #8364ac;
+$grey: #ccc;
+$image-size: 2rem;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+@mixin media-min-width ($width) {
+    @media (min-width: $width) {
+        @content
+    }
+}
+
+.avatar {
+    width: $image-size;
+    min-width: $image-size;
+    height: $image-size;
+    min-height: $image-size;
+    border-radius: 50%;
+    margin-right: 1rem;
+    overflow: hidden;
+
+    img {
+        object-fit: cover;
+        width: inherit;
+        height: inherit;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    width: 100%;
+
+    @include media-min-width(40rem) {
+        padding: 3rem;
+    }
+
+    .input {
+        margin-top: 1.5rem;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        &_user {
+            @extend .avatar
+        }
+
+        &_form {
+            display: flex;
+            flex-direction: row;
+            flex-grow: 1;
+            width: 100%;
+
+            &--text {
+                outline: none;
+                border: 2px solid $grey;
+                margin-right: 1rem;
+                flex-grow: 1;
+                padding: 5px;
+            }
+
+            &--btn {
+                background-color: $purple;
+                padding: 5px 10px;
+                color: white;
+                border: none;
+                outline: none;
+
+                &:hover,
+                &:active {
+                    background-color: lighten($color:$purple, $amount: 10);
+                }
+            }
+        }
+    }
+
+    hr {
+        margin: 2rem auto;
+        border-style: none;
+        border-color: $grey;
+        border-width: 2px;
+        border-top-style: solid;
+        width: 100%;
+    }
+
+    .comments {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+
+        &_card {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: flex-start;
+
+            &--user {
+                @extend .avatar
+            }
+
+            &--body {
+                display: flex;
+                flex-direction: column;
+
+                &_text {
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+    }
+}
