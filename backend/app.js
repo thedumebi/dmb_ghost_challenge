@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/comments", require("./routes/comments"));
 
 // Static folder
-app.use("/public", express.static(path.join(__dirname, "..", "/frontend")));
+app.use(express.static(path.join(__dirname, "..", "/frontend")));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "..", "/frontend/build")));
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
   });
 } else {
   app.get("/", (req, res) => {
-    res.send("API is running on port ${port");
+    res.sendFile(path.join(__dirname, "..", "/frontend/index.html"));
   });
 }
 

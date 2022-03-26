@@ -1,5 +1,7 @@
-$purple: #8364ac;
+$red: #de5753;
 $grey: #ccc;
+$purple: #8364ac;
+$success:#469146;
 $image-size: 2rem;
 
 * {
@@ -39,6 +41,7 @@ body {
     flex-direction: column;
     padding: 2rem;
     width: 100%;
+    position: relative;
 
     @include media-min-width(40rem) {
         padding: 3rem;
@@ -112,13 +115,37 @@ body {
                 display: flex;
                 flex-direction: column;
 
+                &_header {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: .5rem;
+
+                    &-name {
+                        font-size: 1rem;
+                        margin-right: .5rem;
+                    }
+
+                    &-time {
+                        font-size: .8rem;
+                        color: darken($grey, 20%);
+
+                        &::before {
+                            content: "-";
+                            font-size: 1rem;
+                            margin-right: .5rem;
+                        }
+                    }
+                }
+
                 &_text {
-                    margin-bottom: 1rem;
+                    margin-bottom: .5rem;
                 }
 
                 &_ctas {
                     &-upvote {
                         cursor: pointer;
+                        font-size: .8rem;
+                        font-weight: 700;
                     }
                 }
             }
@@ -127,5 +154,29 @@ body {
                 margin-bottom: 2rem;
             }
         }
+    }
+
+    .error {
+        position: absolute;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 70%;
+        max-width: 500px;
+        bottom: 20px;
+        z-index: 10;
+        align-self: center;
+        background-color: $red;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        color: white;
+        font-weight: 600;
+        word-break: break-all;
+    }
+
+    .success {
+        @extend .error;
+        background-color: $success;
+        z-index: 20;
     }
 }

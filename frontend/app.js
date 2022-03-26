@@ -1,9 +1,11 @@
 const baseUrl = "http://localhost:4000/api";
 
 // create comment
+const errorDiv = document.getElementById("error");
+const successDiv = document.getElementById("success");
 const commentsDiv = document.querySelector(".comments");
-const inputButton = document.querySelector(".input_form--btn");
 const inputBox = document.querySelector(".input_form--text");
+const inputButton = document.querySelector(".input_form--btn");
 const upvoteButtons = document.querySelectorAll(
   ".comments_card--body_ctas-upvote"
 );
@@ -12,7 +14,6 @@ inputButton.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const inputValue = inputBox.value;
-  console.log({ inputValue });
   try {
     const res = await fetch(`${baseUrl}/comments`, {
       method: "POST",
@@ -25,9 +26,12 @@ inputButton.addEventListener("click", async (e) => {
     const data = await res.json();
 
     createCard(data);
+
+    inputBox.value = ""
   } catch (err) {
     // handle error
-    alert(err);
+    console.log(err);
+    showError(err);
   }
 });
 
@@ -51,9 +55,19 @@ const createCard = (data) => {
   const cardBody = document.createElement("div");
   cardBody.className = "comments_card--body";
 
+  const cardBodyHeader = document.createElement("div");
+  cardBodyHeader.className = "comments_card--body_header";
+
   const cardBodyName = document.createElement("h3");
-  cardBodyName.className = "comments_card--body_fullName";
+  cardBodyName.className = "comments_card--body_header-name";
   cardBodyName.innerText = data.author.fullName;
+
+  const cardBodyTime = document.createElement("span");
+  cardBodyTime.className = "comments_card--body_header-time";
+  cardBodyTime.innerText = timeSince(new Date(data.time * 1000));
+
+  cardBodyHeader.appendChild(cardBodyName);
+  cardBodyHeader.appendChild(cardBodyTime);
 
   const cardBodyText = document.createElement("div");
   cardBodyText.className = "comments_card--body_text";
@@ -70,7 +84,7 @@ const createCard = (data) => {
 
   ctas.appendChild(upVoteSpan);
 
-  cardBody.appendChild(cardBodyName);
+  cardBody.appendChild(cardBodyHeader);
   cardBody.appendChild(cardBodyText);
   cardBody.appendChild(ctas);
 
@@ -79,7 +93,29 @@ const createCard = (data) => {
   card.appendChild(cardBody);
 
   // append to comments div
-  commentsDiv.appendChild(card);
+  // commentsDiv.appendChild(card);
+  commentsDiv.prepend(card)
+};
+
+const showError = (err) => {
+  errorDiv.textContent =
+    err.response && err.response.data.message
+      ? err.response.data.message
+      : err.message;
+  errorDiv.style.display = "flex";
+  setTimeout(() => {
+    errorDiv.style.display = "none";
+    errorDiv.textContent = "";
+  }, 4000);
+};
+
+const showSuccess = (message) => {
+  successDiv.textContent = message;
+  successDiv.style.display = "flex";
+  setTimeout(() => {
+    successDiv.style.display = "none";
+    successDiv.textContent = "";
+  }, 4000);
 };
 
 const upVoteFn = async function (e) {
@@ -96,9 +132,16 @@ const upVoteFn = async function (e) {
     });
 
     const data = await res.json();
+    if (data.message === "liked") {
+      showSuccess("Liked Comment");
+      this.innerText = "Downvote";
+    } else {
+      showSuccess("Unliked Comment");
+      this.innerText = "Upvote";
+    }
   } catch (err) {
     console.log(err);
-    alert(err.message);
+    showError(err);
   }
 };
 
@@ -107,10 +150,57 @@ Array.from(upvoteButtons).forEach((button) => {
 });
 
 const getComments = async () => {
-  const res = await fetch(`${baseUrl}/comments/`);
+  try {
+    const res = await fetch(`${baseUrl}/comments/`);
 
-  const data = await res.json();
-  data.forEach((comment) => createCard(comment));
+    const data = await res.json();
+    data.forEach((comment) => createCard(comment));
+  } catch (err) {
+    showError(err);
+  }
 };
 
 getComments();
+
+const timeSince = (date) => {
+  if (typeof date !== "object") {
+    date = new Date(date);
+  }
+
+  var seconds = Math.floor((new Date() - date) / 1000);
+  var intervalType;
+
+  var interval = Math.floor(seconds / 31536000);
+  if (interval >= 1) {
+    intervalType = "year";
+  } else {
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) {
+      intervalType = "month";
+    } else {
+      interval = Math.floor(seconds / 86400);
+      if (interval >= 1) {
+        intervalType = "day";
+      } else {
+        interval = Math.floor(seconds / 3600);
+        if (interval >= 1) {
+          intervalType = "hour";
+        } else {
+          interval = Math.floor(seconds / 60);
+          if (interval >= 1) {
+            intervalType = "minute";
+          } else {
+            interval = seconds;
+            intervalType = "second";
+          }
+        }
+      }
+    }
+  }
+
+  if (interval > 1 || interval === 0) {
+    intervalType += "s ago";
+  }
+
+  return interval + " " + intervalType;
+};
