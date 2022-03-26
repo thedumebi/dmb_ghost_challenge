@@ -140,4 +140,12 @@ body {
 .container .comments_card--body_text {
   margin-bottom: 1rem;
 }
+
+.container .comments_card--body_ctas-upvote {
+  cursor: pointer;
+}
+
+.container .comments_card:not(:last-child) {
+  margin-bottom: 2rem;
+}
 /*# sourceMappingURL=style.css.map */

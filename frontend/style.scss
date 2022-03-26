@@ -115,6 +115,16 @@ body {
                 &_text {
                     margin-bottom: 1rem;
                 }
+
+                &_ctas {
+                    &-upvote {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 2rem;
             }
         }
     }
