@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Getting Started with Comments App
 This project was fone for the ghost accessment.
 
 ## Available Scripts
