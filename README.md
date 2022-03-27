@@ -16,7 +16,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ### `npm run data:import`
 
-This command would fill up the database with dummy users. The sequelize.rc file controls the environment.
+This command would fill up the database with dummy users. The sequelize.rc file controls the seeding environment.
 
 ### `npm run data:destroy`
 
