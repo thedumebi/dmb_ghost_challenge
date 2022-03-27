@@ -1,0 +1,4 @@
+export const ADD_COMMENT = "ADD_COMMENT";
+export const SET_COMMENTS = "SET_COMMENTS";
+export const LIKE_COMMENT = "LIKE_COMMENT";
+export const ADD_COMMENT_REPLY = "ADD_COMMENT_REPLY";

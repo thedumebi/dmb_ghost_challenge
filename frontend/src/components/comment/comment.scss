@@ -1,0 +1,109 @@
+@import "../../_variables.scss";
+
+.card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-start;
+
+    &.border {
+        position: relative;
+
+        >.card__body::before {
+            content: "";
+            align-self: stretch;
+            border-left: 2px solid grey;
+            position: absolute;
+            left: 1rem;
+            height: 100%;
+            z-index: -1;
+        }
+    }
+
+    &__user {
+        @extend .avatar
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &__header {
+            display: flex;
+            align-items: center;
+            margin-bottom: .5rem;
+
+            &__name {
+                font-size: 1rem;
+                margin-right: .5rem;
+            }
+
+            &__time {
+                font-size: .8rem;
+                color: darken($grey, 20%);
+
+                &::before {
+                    content: "\25CF";
+                    font-size: 1rem;
+                    margin-right: .5rem;
+                }
+            }
+        }
+
+        &__text {
+            margin-bottom: .5rem;
+        }
+
+        &__ctas {
+            display: flex;
+            width: 100%;
+
+            &__upvote {
+                cursor: pointer;
+                font-size: .8rem;
+                font-weight: 700;
+                display: flex;
+                align-items: stretch;
+                margin-right: 1rem;
+
+                span:first-child {
+                    font-size: 1rem;
+                }
+            }
+
+            &__reply {
+                font-size: .8rem;
+                display: flex;
+                width: 100%;
+
+                span {
+                    cursor: pointer;
+                }
+
+                &__box {
+                    display: flex;
+                    width: 100%;
+
+                    svg {
+                        font-size: 1rem;
+                    }
+
+                    input {
+                        margin-left: .8rem;
+                        padding: .5rem 1rem;
+                        flex-grow: 1;
+                    }
+                }
+            }
+        }
+
+        &__replies {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 1.5rem;
+            gap: 2rem;
+        }
+    }
+}

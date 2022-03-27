@@ -1,0 +1,40 @@
+@import "../../_variables.scss";
+
+.input {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    &__user {
+        @extend .avatar
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        width: 100%;
+
+        &__text {
+            outline: none;
+            border: 2px solid $grey;
+            margin-right: 1rem;
+            flex-grow: 1;
+            padding: 5px;
+        }
+
+        &__btn {
+            background-color: $purple;
+            padding: 5px 10px;
+            color: white;
+            border: none;
+            outline: none;
+
+            &:hover,
+            &:active {
+                background-color: lighten($color:$purple, $amount: 10);
+            }
+        }
+    }
+}
