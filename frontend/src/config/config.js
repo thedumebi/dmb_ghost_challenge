@@ -1,4 +1,4 @@
 module.exports = {
-  url: "https://chiwuzoh.com.ng/api/",
+  url: "https://ghost.chiwuzoh.com.ng/api/",
   test: "http://localhost:4000/api/",
 };
