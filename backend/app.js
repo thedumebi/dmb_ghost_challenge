@@ -18,17 +18,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/comments", require("./routes/comments"));
 
 // Static folder
-app.use(express.static(path.join(__dirname, "..", "/frontend")));
+// app.use(express.static(path.join(__dirname, "..", "/frontend")));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "..", "/frontend/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "/frontend/index.html"));
+    res.sendFile(path.join(__dirname, "..", "/frontend/build/index.html"));
   });
 } else {
   app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "/frontend/index.html"));
+    res.send(`API is running on port ${port}`);
   });
 }
 
@@ -50,5 +50,5 @@ db.sequelize
     });
   })
   .catch((err) => {
-    console.log("\x1b[31m%s\x1b[0m", { err });
+    console.log("\x1b[31m%s\x1b[0m", err );
   });
